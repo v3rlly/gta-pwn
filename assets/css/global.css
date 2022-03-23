@@ -1,0 +1,15 @@
+/* body */
+html,body {
+    margin: 0;
+    padding: 0;
+}
+
+/* root container */
+div.container#root {
+    height: 95vh;
+}
+
+/* navbar */
+nav#navbar {
+    height: 5vh;
+}

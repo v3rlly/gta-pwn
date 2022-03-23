@@ -1,0 +1,41 @@
+version: '3.8'
+services:
+  # Web application
+  app:
+    build:
+        context: ./
+        dockerfile: Dockerfile
+    container_name: ${APP_NAME}
+    depends_on:
+        - mysql_db
+    networks:
+        - webvuln
+    ports:
+        - 8000:80
+    volumes:
+        - ./app:/var/www/html/
+        - ./assets:/var/www/html/assets
+  # MySQL database
+  mysql_db:
+    image: mysql
+    container_name: mysql_db
+    restart: always
+    networks:
+        - webvuln
+    ports:
+        - "9906:3306"
+    volumes:
+      - mysql_db:/var/lib/mysql
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./mysql/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    environment:
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        MYSQL_DATABASE: ${MYSQL_DATABASE}
+        MYSQL_USER: ${MYSQL_USER}
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+networks:
+    webvuln:
+        driver: bridge
+volumes:
+    mysql_db:
+        driver: local
