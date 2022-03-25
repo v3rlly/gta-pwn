@@ -11,7 +11,7 @@ if(isset($_POST['username']) && isset($_POST['password']))
     $query = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
     $result = $conn->query($query);
 
-    if ($result->num_rows > 0)
+    if ($result && $result->num_rows > 0)
     {
         $_SESSION["username"] = $username;
         $_SESSION["authenticated"] = true;
@@ -20,6 +20,10 @@ if(isset($_POST['username']) && isset($_POST['password']))
     else
     {
         $status = 'failed';
+
+        echo '<pre>';
+        echo $conn->error;
+        echo '</pre>';
     }
 }
 ?>
