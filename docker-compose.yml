@@ -13,6 +13,7 @@ services:
     ports:
         - 8000:80
     volumes:
+        - ./apache2.conf:/etc/apache2/apache2.conf
         - ./app:/var/www/html/
         - ./assets:/var/www/html/assets
   # MySQL database
